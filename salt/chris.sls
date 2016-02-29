@@ -20,3 +20,14 @@ include:
     - ruby: {{ name }}
 {% endfor %}
 {% endfor %}
+
+/home/{{user}}//.gitconfig:
+  file.managed:
+    content: |
+      [user]
+        email = {{ salt["pillar.get"]("user:email") }}
+        name = {{ salt["pillar.get"]("user:fullname") }}
+      [color]
+        diff = auto
+        status = auto
+

@@ -1,5 +1,7 @@
 user:
   name: chris
+  email: cheald@gmail.com
+  fullname: Chris Heald
   rubies:
     ruby-2.3.0:
       default: true
