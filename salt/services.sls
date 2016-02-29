@@ -1,13 +1,13 @@
 redis:
   pkg.installed:
-    - fromrepo: epel
+    - fromrepo: {{ salt["pillar.get"]("redis:repo")}}
   service.running:
     - enable: true
 
 percona-release:
   pkg.installed:
     - sources:
-      - percona-release: http://www.percona.com/downloads/percona-release/redhat/0.1-3/percona-release-0.1-3.noarch.rpm
+      - percona-release: {{ salt["pillar.get"]("percona:repo_package")}}
 
 Percona-Server-MongoDB:
   pkg.installed:
@@ -31,10 +31,12 @@ Percona-Server-server-55:
     - name: mysql
     - enable: true
 
+{% if grains['os_family'] == "RedHat" %}
 rabbitmq-signing-key:
   cmd.run:
     - name: rpm --import https://www.rabbitmq.com/rabbitmq-signing-key-public.asc
     - unless: "rpm -q gpg-pubkey --qf '%{name}-%{version}-%{release} --> %{summary}\n'  | grep RabbitMQ"
+{% endif %}
 
 rabbitmq-server:
   pkg.installed:
@@ -46,6 +48,6 @@ rabbitmq-server:
 elasticsearch:
   pkg.installed:
     - sources:
-      - elasticsearch: https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.5.noarch.rpm
+      - elasticsearch: {{ salt["pillar.get"]("elasticsearch:package") }}
   service.running:
     - enable: true
