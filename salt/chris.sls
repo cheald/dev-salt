@@ -21,9 +21,9 @@ include:
 {% endfor %}
 {% endfor %}
 
-/home/{{user}}//.gitconfig:
+/home/{{user}}/.gitconfig:
   file.managed:
-    content: |
+    - content: |
       [user]
         email = {{ salt["pillar.get"]("user:email") }}
         name = {{ salt["pillar.get"]("user:fullname") }}
@@ -31,3 +31,6 @@ include:
         diff = auto
         status = auto
 
+/home/{{user}}/.screenrc:
+  file.managed:
+    - content: termcapinfo xterm* ti@:te@

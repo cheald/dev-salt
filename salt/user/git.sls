@@ -10,3 +10,5 @@
         [color]
           diff = auto
           status = auto
+        [push]
+          default = simple

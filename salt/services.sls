@@ -4,6 +4,16 @@ redis:
   service.running:
     - enable: true
 
+redis-slave-selinux:
+  cmd.run:
+    - name: semanage port -a -t redis_port_t -p tcp 6389
+
+/usr/lib/systemd/system/redis@.service:
+  file.rename:
+    - source: /usr/lib/systemd/system/redis.service
+    - require:
+      - pkg: redis
+
 percona-release:
   pkg.installed:
     - sources:
